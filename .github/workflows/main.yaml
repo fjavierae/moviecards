@@ -20,9 +20,6 @@ jobs:
         with: 
           name: moviecards-java 
           path: "${{ github.workspace }}/target/*.jar"
-      - name: empaquetado 
-        run: echo "empaquetado" 
- 
   test:
     needs: build
     runs-on: ubuntu-latest

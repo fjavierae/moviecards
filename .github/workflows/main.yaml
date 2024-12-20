@@ -84,10 +84,10 @@ jobs:
       
     steps:
       - name: Aprobación manual 
-          uses: trstringer/manual-approval@v1 
-          with: 
-            secret: ${{ secrets.TOKEN }} 
-            approvers: fjavierae 
+        uses: trstringer/manual-approval@v1 
+        with: 
+          secret: ${{ secrets.TOKEN }} 
+          approvers: Antoranz 
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:

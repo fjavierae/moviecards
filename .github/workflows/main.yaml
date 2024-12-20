@@ -56,7 +56,8 @@ jobs:
         
       - name: Ejecutar las pruebas unitarias, de integración y end to end
         run: mvn clean verify 
-  qa: 
+  qa:
+    needs: test 
     runs-on: self-hosted 
     continue-on-error: true 
     steps: 
@@ -71,7 +72,7 @@ jobs:
         run: mvn clean package -DskipTests 
       - name: Revisar la calidad con Sonarqube 
         run: | 
-          mvn sonar:sonar -Dsonar.host.url=http://localhost:9000Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin 
+          mvn sonar:sonar -Dsonar.host.url=http://localhost:9000Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=hola123 
  
   deploy: 
     needs: qa 

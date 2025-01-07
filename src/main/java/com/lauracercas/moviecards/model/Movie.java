@@ -1,7 +1,5 @@
 package com.lauracercas.moviecards.model;
 
-
-import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,10 +8,8 @@ import java.util.Objects;
  * Proyecto: TFM Integración Continua con GitHub Actions
  * Fecha: 04/06/2024
  */
-@Entity
+
 public class Movie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String title;
     private Integer releaseYear;
@@ -23,12 +19,6 @@ public class Movie {
     private String genre;
     private String sinopsis;
 
-    @ManyToMany
-    @JoinTable(
-            name = "movie_actor",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "actor_id")
-    )
     private List<Actor> actors;
 
 

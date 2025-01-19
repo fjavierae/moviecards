@@ -1,7 +1,7 @@
 package com.lauracercas.moviecards.unittest.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,18 +81,20 @@ public class MovieTest {
     void testAddActor() {
         List<Actor> actorsExample = new ArrayList<Actor>();
         movie.setActors(actorsExample);
-        Actor actorExample = new Actor(1,"Sample name");
+        Actor actorExample = new Actor(1, "Sample name");
         movie.addActor(actorExample);
         assert(movie.getActors().contains(actorExample));
+        assertEquals(1, movie.getActors().size());
     }
 
-    @Test
-    void testExistActorInMovie() {
+    @Test void testExistActorInMovie() {
         List<Actor> actorsExample = new ArrayList<Actor>();
-        Actor actorExample = new Actor(2,"Sample name");
+        Actor actorExample = new Actor(2, "Sample name");
         actorsExample.add(actorExample);
         movie.setActors(actorsExample);
-        assert(movie.existActorInMovie(actorExample));
+        assertTrue(movie.existActorInMovie(actorExample));
+        assertTrue(movie.getActors().contains(actorExample));
     }
+
 
 }

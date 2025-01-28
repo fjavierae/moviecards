@@ -91,7 +91,7 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'moviecards-pre-antoranz'
-          slot-name: 'Preproduction'
+          slot-name: 'staging'
           package: '*.jar'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2F00EB9734DF4CB784620207DDE5B95E }}
   deploy:

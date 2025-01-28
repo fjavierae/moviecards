@@ -1,5 +1,8 @@
 package com.lauracercas.moviecards.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -10,17 +13,20 @@ import java.util.Objects;
  * Fecha: 04/06/2024
  * 
  */
-
+@Entity
 public class Actor {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
 
     private String country;
 
+    @ManyToMany(mappedBy = "actors")
     private List<Movie> movies;
 
     public Actor() {

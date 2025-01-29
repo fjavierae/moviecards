@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
@@ -26,7 +27,16 @@ public class ActorJPAIT {
     public void testSaveActor() {
         Actor actor = new Actor();
         actor.setName("actor");
-        actor.setBirthDate(new Date());
+
+        Date fechaActual = new Date();
+
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTime(fechaActual);
+        calendario.add(Calendar.YEAR, 100);
+
+        Date fechaFutura = calendario.getTime();
+        actor.setBirthDate(fechaActual);
+        actor.setDeadDate(fechaFutura);
         actor.setCountry("spain");
 
         Actor savedActor = actorJPA.save(actor);

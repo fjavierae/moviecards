@@ -24,6 +24,9 @@ public class Actor {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date deadDate;
+
     private String country;
 
     @ManyToMany(mappedBy = "actors")
@@ -36,7 +39,13 @@ public class Actor {
         this.id = id;
         this.name = name;
     }
+    public Date getDeadDate() {
+        return deadDate;
+    }
 
+    public void setDeadDate(Date deadDate) {
+        this.deadDate = deadDate;
+    }
     public Integer getId() {
         return id;
     }
@@ -82,11 +91,11 @@ public class Actor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Actor actor = (Actor) o;
-        return Objects.equals(id, actor.id) && Objects.equals(name, actor.name) && Objects.equals(birthDate, actor.birthDate) && Objects.equals(country, actor.country);
+        return Objects.equals(id, actor.id) && Objects.equals(name, actor.name) && Objects.equals(birthDate, actor.birthDate) && Objects.equals(country, actor.country) && Objects.equals(deadDate, actor.deadDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, birthDate, country);
+        return Objects.hash(id, name, birthDate, country, deadDate);
     }
 }

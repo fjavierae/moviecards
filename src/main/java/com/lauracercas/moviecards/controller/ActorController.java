@@ -24,9 +24,9 @@ import java.util.List;
  */
 @Controller
 public class ActorController {
-    final String actor ="actor";
-    final String title ="title";
-    final String formPage ="actors/form";
+    final static String actor ="actor";
+    final static String title ="title";
+    final static String formPage ="actors/form";
     @Autowired
     ActorService actorService;
 

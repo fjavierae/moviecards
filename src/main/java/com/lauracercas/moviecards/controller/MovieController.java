@@ -24,10 +24,10 @@ import java.util.List;
  */
 @Controller
 public class MovieController {
-    final String movies = "movies";
-    final String movie = "movie";
-    final String title ="title";
-    final String formPage="movies/form";
+    final static String movies = "movies";
+    final static String movie = "movie";
+    final static String title ="title";
+    final static String formPage="movies/form";
     @Autowired
     MovieService movieService;
 

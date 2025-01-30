@@ -59,7 +59,9 @@ jobs:
   qa:
     needs: test 
     runs-on: self-hosted 
-    continue-on-error: true 
+    continue-on-error: true
+    outputs:
+      stage-success: ${{ job.status == 'success' }
     steps: 
       - name: Descargar repositorio 
         uses: actions/checkout@v2
@@ -77,6 +79,8 @@ jobs:
     needs: qa
     runs-on: ubuntu-latest
     if: github.ref=='refs/heads/master'
+    outputs:
+      stage-success: ${{ job.status == 'success' }
     environment:
         name: 'Preproduction'
         url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -97,7 +101,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [qa,stage]
-    if: github.ref == 'refs/heads/master' && needs.qa.result == 'success' && needs.stage.result == 'success'
+    if: github.ref == 'refs/heads/master' && needs.qa.outputs.qa-success == 'true' && needs.stage.outputs.stage-success == 'true'
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}

@@ -96,8 +96,8 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2F00EB9734DF4CB784620207DDE5B95E }}
   deploy:
     runs-on: ubuntu-latest
-    needs: stage
-    if: github.ref=='refs/heads/master'
+    needs: [qa,stage]
+    if: github.ref=='refs/heads/master' && success()
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}

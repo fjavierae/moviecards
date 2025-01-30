@@ -1,6 +1,7 @@
 package com.lauracercas.moviecards.unittest.controller;
 
 import com.lauracercas.moviecards.controller.MovieController;
+import com.lauracercas.moviecards.data.MovieDTO;
 import com.lauracercas.moviecards.model.Actor;
 import com.lauracercas.moviecards.model.Movie;
 import com.lauracercas.moviecards.service.movie.MovieService;
@@ -72,13 +73,14 @@ class MovieControllerTest {
 
     @Test
     void shouldSaveMovieWithNoErrors() {
-        Movie movie = new Movie();
+        MovieDTO movieDTO = new MovieDTO();
+        Movie movie = new Movie(movieDTO);
         BindingResult result = mock(BindingResult.class);
         when(result.hasErrors()).thenReturn(false);
 
         when(movieServiceMock.save(any(Movie.class))).thenReturn(movie);
 
-        String viewName = controller.saveMovie(movie, result, model);
+        String viewName = controller.saveMovie(movieDTO, result, model);
 
         assertEquals("movies/form", viewName);
 
@@ -89,14 +91,15 @@ class MovieControllerTest {
 
     @Test
     void shouldUpdateMovieWithNoErrors() {
-        Movie movie = new Movie();
-        movie.setId(1);
+        MovieDTO movieDTO = new MovieDTO();
+        movieDTO.setId(1);
+        Movie movie = new Movie(movieDTO);
         BindingResult result = mock(BindingResult.class);
         when(result.hasErrors()).thenReturn(false);
 
         when(movieServiceMock.save(any(Movie.class))).thenReturn(movie);
 
-        String viewName = controller.saveMovie(movie, result, model);
+        String viewName = controller.saveMovie(movieDTO, result, model);
 
         assertEquals("movies/form", viewName);
 
@@ -108,11 +111,11 @@ class MovieControllerTest {
 
     @Test
     void shouldTrySaveMovieWithErrors() {
-        Movie movie = new Movie();
+        MovieDTO movieDTO = new MovieDTO();
         BindingResult result = mock(BindingResult.class);
         when(result.hasErrors()).thenReturn(true);
 
-        String viewName = controller.saveMovie(movie, result, model);
+        String viewName = controller.saveMovie(movieDTO, result, model);
 
         assertEquals("movies/form", viewName);
 

@@ -1,6 +1,7 @@
 package com.lauracercas.moviecards.unittest.controller;
 
 import com.lauracercas.moviecards.controller.ActorController;
+import com.lauracercas.moviecards.data.ActorDTO;
 import com.lauracercas.moviecards.model.Actor;
 import com.lauracercas.moviecards.model.Movie;
 import com.lauracercas.moviecards.service.actor.ActorService;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -26,6 +29,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
  */
 class ActorControllerTest {
 
+    private static final Logger log = LoggerFactory.getLogger(ActorControllerTest.class);
     private ActorController controller;
 
     @Mock
@@ -70,31 +74,33 @@ class ActorControllerTest {
 
     @Test
     void shouldSaveActorWithNoErrors() {
-        Actor actor = new Actor();
+        ActorDTO actor = new ActorDTO();
+        Actor a = new Actor(actor);
         BindingResult result = mock(BindingResult.class);
         when(result.hasErrors()).thenReturn(false);
 
-        when(actorServiceMock.save(any(Actor.class))).thenReturn(actor);
+        when(actorServiceMock.save(any(Actor.class))).thenReturn(a);
 
         String viewName = controller.saveActor(actor, result, model);
 
         assertEquals("actors/form", viewName);
 
-        verify(model).addAttribute("actor", actor);
+        verify(model).addAttribute("actor", a);
         verify(model).addAttribute("title", Messages.EDIT_ACTOR_TITLE);
         verify(model).addAttribute("message", Messages.SAVED_ACTOR_SUCCESS);
     }
 
     @Test
     void shouldUpdateActorWithNoErrors() {
-        Actor actor = new Actor();
-        actor.setId(1);
+        ActorDTO actorDTO = new ActorDTO();
+        actorDTO.setId(1);
+        Actor actor = new Actor(actorDTO);
         BindingResult result = mock(BindingResult.class);
         when(result.hasErrors()).thenReturn(false);
 
         when(actorServiceMock.save(any(Actor.class))).thenReturn(actor);
 
-        String viewName = controller.saveActor(actor, result, model);
+        String viewName = controller.saveActor(actorDTO, result, model);
 
         assertEquals("actors/form", viewName);
 
@@ -105,11 +111,11 @@ class ActorControllerTest {
 
     @Test
     void shouldTrySaveActorWithErrors() {
-        Actor actor = new Actor();
+        ActorDTO actorDTO = new ActorDTO();
         BindingResult result = mock(BindingResult.class);
         when(result.hasErrors()).thenReturn(true);
 
-        String viewName = controller.saveActor(actor, result, model);
+        String viewName = controller.saveActor(actorDTO, result, model);
 
         assertEquals("actors/form", viewName);
 

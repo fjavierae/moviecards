@@ -1,7 +1,5 @@
-package com.lauracercas.moviecards.model;
+package com.lauracercas.moviecards.data;
 
-
-import com.lauracercas.moviecards.data.MovieDTO;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,10 +10,8 @@ import java.util.Objects;
  * Proyecto: TFM Integración Continua con GitHub Actions
  * Fecha: 04/06/2024
  */
-@Entity
-public class Movie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class MovieDTO {
+
     private Integer id;
     private String title;
     private Integer releaseYear;
@@ -25,28 +21,7 @@ public class Movie {
     private String genre;
     private String sinopsis;
 
-    @ManyToMany
-    @JoinTable(
-            name = "movie_actor",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "actor_id")
-    )
-    private List<Actor> actors;
-
-    public Movie(MovieDTO movieDTO) {
-        this.id = movieDTO.getId();
-        this.country = movieDTO.getCountry();
-        this.director = movieDTO.getDirector();
-        this.genre = movieDTO.getGenre();
-        this.duration = movieDTO.getDuration();
-        this.releaseYear = movieDTO.getReleaseYear();
-        this.sinopsis = movieDTO.getSinopsis();
-        this.title = movieDTO.getTitle();
-    }
-
-    public Movie() {
-
-    }
+    private List<ActorDTO> actors;
 
     public Integer getId() {
         return id;
@@ -113,11 +88,11 @@ public class Movie {
     }
 
 
-    public List<Actor> getActors() {
+    public List<ActorDTO> getActors() {
         return actors;
     }
 
-    public void setActors(List<Actor> actors) {
+    public void setActors(List<ActorDTO> actors) {
         this.actors = actors;
     }
 
@@ -125,7 +100,7 @@ public class Movie {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Movie movie = (Movie) o;
+        MovieDTO movie = (MovieDTO) o;
         return Objects.equals(id, movie.id) && Objects.equals(title, movie.title) && Objects.equals(releaseYear, movie.releaseYear) && Objects.equals(duration, movie.duration) && Objects.equals(country, movie.country) && Objects.equals(director, movie.director) && Objects.equals(genre, movie.genre) && Objects.equals(sinopsis, movie.sinopsis);
     }
 
@@ -134,13 +109,13 @@ public class Movie {
         return Objects.hash(id, title, releaseYear, duration, country, director, genre, sinopsis);
     }
 
-    public void addActor(Actor actor) {
+    public void addActor(ActorDTO actor) {
         if (actor != null) {
             getActors().add(actor);
         }
     }
 
-    public boolean existActorInMovie(Actor actor) {
+    public boolean existActorInMovie(ActorDTO actor) {
         return actors.contains(actor);
     }
 

@@ -1,9 +1,7 @@
-package com.lauracercas.moviecards.model;
+package com.lauracercas.moviecards.data;
 
-import com.lauracercas.moviecards.data.ActorDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -14,10 +12,9 @@ import java.util.Objects;
  * Fecha: 04/06/2024
  * 
  */
-@Entity
-public class Actor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
+public class ActorDTO {
+
     private Integer id;
 
     private String name;
@@ -30,25 +27,15 @@ public class Actor {
 
     private String country;
 
-    @ManyToMany(mappedBy = "actors")
-    private List<Movie> movies;
+    private List<MovieDTO> movies;
 
-    public Actor() {
+    public ActorDTO() {
     }
 
-    public Actor(Integer id, String name) {
+    public ActorDTO(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
-
-    public Actor(ActorDTO actorDTO) {
-        this.name = actorDTO.getName();
-        this.id = actorDTO.getId();
-        this.country = actorDTO.getCountry();
-        this.birthDate = actorDTO.getBirthDate();
-        this.deadDate = actorDTO.getDeadDate();
-    }
-
     public Date getDeadDate() {
         return deadDate;
     }
@@ -88,11 +75,11 @@ public class Actor {
         this.country = country;
     }
 
-    public List<Movie> getMovies() {
+    public List<MovieDTO> getMovies() {
         return movies;
     }
 
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(List<MovieDTO> movies) {
         this.movies = movies;
     }
 
@@ -100,7 +87,7 @@ public class Actor {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Actor actor = (Actor) o;
+        ActorDTO actor = (ActorDTO) o;
         return Objects.equals(id, actor.id) && Objects.equals(name, actor.name) && Objects.equals(birthDate, actor.birthDate) && Objects.equals(country, actor.country) && Objects.equals(deadDate, actor.deadDate);
     }
 

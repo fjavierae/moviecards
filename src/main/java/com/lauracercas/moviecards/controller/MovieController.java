@@ -1,5 +1,6 @@
 package com.lauracercas.moviecards.controller;
 
+import com.lauracercas.moviecards.data.MovieDTO;
 import com.lauracercas.moviecards.model.Actor;
 import com.lauracercas.moviecards.model.Movie;
 import com.lauracercas.moviecards.service.movie.MovieService;
@@ -49,10 +50,11 @@ public class MovieController {
     }
 
     @PostMapping("saveMovie")
-    public String saveMovie(@ModelAttribute Movie m, BindingResult result, Model model) {
+    public String saveMovie(@ModelAttribute(movie) MovieDTO movieDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return formPage;
         }
+        Movie m = new Movie(movieDTO);
         Movie movieSaved = movieService.save(m);
         if (movieSaved.getId() != null) {
             model.addAttribute("message", Messages.UPDATED_MOVIE_SUCCESS);

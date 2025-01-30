@@ -24,7 +24,9 @@ import java.util.List;
  */
 @Controller
 public class ActorController {
-
+    final String actor ="actor";
+    final String title ="title";
+    final String formPage ="actors/form";
     @Autowired
     ActorService actorService;
 
@@ -40,38 +42,38 @@ public class ActorController {
 
     @GetMapping("actors/new")
     public String newActor(Model model) {
-        model.addAttribute("actor", new Actor());
-        model.addAttribute("title", Messages.NEW_ACTOR_TITLE);
-        return "actors/form";
+        model.addAttribute(actor, new Actor());
+        model.addAttribute(title, Messages.NEW_ACTOR_TITLE);
+        return formPage;
     }
 
     @PostMapping("saveActor")
-    public String saveActor(@ModelAttribute Actor actor, BindingResult result, Model model) {
+    public String saveActor(@ModelAttribute Actor a, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "actors/form";
+            return formPage;
         }
-        Actor actorSaved = actorService.save(actor);
-        if (actor.getId() != null) {
+        Actor actorSaved = actorService.save(a);
+        if (a.getId() != null) {
             model.addAttribute("message", Messages.UPDATED_ACTOR_SUCCESS);
         } else {
             model.addAttribute("message", Messages.SAVED_ACTOR_SUCCESS);
         }
 
-        model.addAttribute("actor", actorSaved);
-        model.addAttribute("title", Messages.EDIT_ACTOR_TITLE);
-        return "actors/form";
+        model.addAttribute(actor, actorSaved);
+        model.addAttribute(title, Messages.EDIT_ACTOR_TITLE);
+        return formPage;
     }
 
     @GetMapping("editActor/{actorId}")
     public String editActor(@PathVariable Integer actorId, Model model) {
-        Actor actor = actorService.getActorById(actorId);
-        List<Movie> movies = actor.getMovies();
-        model.addAttribute("actor", actor);
+        Actor a = actorService.getActorById(actorId);
+        List<Movie> movies = a.getMovies();
+        model.addAttribute(actor, a);
         model.addAttribute("movies", movies);
 
-        model.addAttribute("title", Messages.EDIT_ACTOR_TITLE);
+        model.addAttribute(title, Messages.EDIT_ACTOR_TITLE);
 
-        return "actors/form";
+        return formPage;
     }
 
 

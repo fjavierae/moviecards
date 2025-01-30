@@ -42,7 +42,7 @@ class ActorServiceImplTest {
     }
 
     @Test
-    public void shouldGetAllActors() {
+    void shouldGetAllActors() {
         Actor actors[] = new Actor[2];
         actors[0] = new Actor();
         actors[1] = new Actor();
@@ -55,7 +55,7 @@ class ActorServiceImplTest {
     }
 
     @Test
-    public void shouldGetActorById() {
+    void shouldGetActorById() {
         Actor actor = new Actor();
         actor.setId(1);
         actor.setName("Sample Actor");

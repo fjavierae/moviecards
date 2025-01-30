@@ -18,8 +18,7 @@ public class MovieCardsApplication {
     }
     @Bean
     public RestTemplate template(){
-        RestTemplate template = new RestTemplate();
-        return template;
+        return new RestTemplate();
     }
 
 }

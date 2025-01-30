@@ -24,7 +24,10 @@ import java.util.List;
  */
 @Controller
 public class MovieController {
-
+    final String movies = "movies";
+    final String movie = "movie";
+    final String title ="title";
+    final String formPage="movies/form";
     @Autowired
     MovieService movieService;
 
@@ -32,46 +35,46 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping("movies")
+    @GetMapping(movies)
     public String getMoviesList(Model model) {
-        model.addAttribute("movies", movieService.getAllMovies());
+        model.addAttribute(movies, movieService.getAllMovies());
         return "movies/list";
     }
 
-    @GetMapping("movies/new")
+    @GetMapping(movies+"/new")
     public String newMovie(Model model) {
         model.addAttribute("movie", new Movie());
-        model.addAttribute("title", Messages.NEW_MOVIE_TITLE);
-        return "movies/form";
+        model.addAttribute(title, Messages.NEW_MOVIE_TITLE);
+        return formPage;
     }
 
     @PostMapping("saveMovie")
-    public String saveMovie(@ModelAttribute Movie movie, BindingResult result, Model model) {
+    public String saveMovie(@ModelAttribute Movie m, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "movies/form";
+            return formPage;
         }
-        Movie movieSaved = movieService.save(movie);
+        Movie movieSaved = movieService.save(m);
         if (movieSaved.getId() != null) {
             model.addAttribute("message", Messages.UPDATED_MOVIE_SUCCESS);
         } else {
             model.addAttribute("message", Messages.SAVED_MOVIE_SUCCESS);
         }
 
-        model.addAttribute("movie", movieSaved);
-        model.addAttribute("title", Messages.EDIT_MOVIE_TITLE);
-        return "movies/form";
+        model.addAttribute(movie, movieSaved);
+        model.addAttribute(title, Messages.EDIT_MOVIE_TITLE);
+        return formPage;
     }
 
     @GetMapping("editMovie/{movieId}")
     public String editMovie(@PathVariable Integer movieId, Model model) {
-        Movie movie = movieService.getMovieById(movieId);
-        List<Actor> actors = movie.getActors();
-        model.addAttribute("movie", movie);
+        Movie m = movieService.getMovieById(movieId);
+        List<Actor> actors = m.getActors();
+        model.addAttribute(movie, m);
         model.addAttribute("actors", actors);
 
-        model.addAttribute("title", Messages.EDIT_MOVIE_TITLE);
+        model.addAttribute(title, Messages.EDIT_MOVIE_TITLE);
 
-        return "movies/form";
+        return formPage;
     }
 
 
